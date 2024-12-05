@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Fact Project</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 30px;
+            background-color: rebeccapurple;
+            color: whitesmoke;
+            .get-cat{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+            }
+            button{
+                padding: 20px 30px;
+                border: none;
+                border-radius: 8px;
+                font-size: 18px;
+                color: green;
+                font-weight: bolder;
+                cursor: pointer;
+            }
+            button:active{
+                background-color: green;
+                color: whitesmoke;
+            }
+            p{
+                display: block;
+                margin: 10px auto;
+                font-size: 16px;
+                color: whitesmoke;
+                width: 400px;
+            }
+
+            @media screen and (max-width: 600px) {
+            body,html{
+                padding: 0;
+                margin: 0;
+               overflow-x: hidden;
+            }
+            .get-cat{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                padding: 0 16px;
+                margin-top: 30px;
+            }
+            h1{
+                font-size: 58px;
+            }
+           
+            button{
+                padding: 14px 20px;
+            }
+            p{
+                width: 300px;
+                font-size: 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        }
+      
+    </style>
+</head>
+<body>
+
+    <div class="get-cat">
+        <h1>Cat fact</h1>
+        <button id="get-cat">Get search result</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+       const iro = new XMLHttpRequest();
+const buttonElement = document.getElementById('get-cat');
+const result = document.getElementById('result');
+
+buttonElement.addEventListener('click', () => {
+    result.textContent = 'Loading...';
+    result.style.fontSize = '22px' // Display loading message
+
+    iro.open('GET', 'https://catfact.ninja/fact');
+    iro.responseType = 'json';
+    iro.onload = () => {
+        if (iro.status === 200) {
+            // Delay the result display by 3 seconds
+            setTimeout(() => {
+                result.textContent = iro.response.fact;
+            }, 1000);
+        } else {
+            // Delay the error message display by 3 seconds
+            setTimeout(() => {
+                result.textContent = 'Failed to execute';
+            }, 1000);
+        }
+    };
+    iro.send(); // Don't forget to send the request
+});
+
+
+          //ASYN AND AWAIT
+
+        //   async () => {
+        //             result = await fetch('https://catfact.ninja/fact');
+        //             result = await result.json();
+        //             console.log(result);
+        //         } 
+    </script>
+</body>
+</html>
